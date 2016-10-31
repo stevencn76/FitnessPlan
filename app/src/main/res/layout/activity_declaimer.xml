@@ -32,7 +32,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp"
-        android:id="@+id/disagreeBtn" />
+        android:id="@+id/disagreeBtn"
+        android:onClick="onDisagreeBtnClicked" />
 
     <Button
         android:text="Confirm"

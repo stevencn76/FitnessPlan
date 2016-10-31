@@ -16,7 +16,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
-        <activity android:name=".activity.DeclaimerActivity"></activity>
+        <activity android:name=".activity.DeclaimerActivity" />
+        <activity android:name=".activity.CreatePlanActivity" />
+        <activity android:name=".activity.PlanActivity" />
+        <activity android:name=".activity.PlanListActivity" />
+        <activity android:name=".activity.ExerciseListActivity" />
+        <activity android:name=".activity.ExerciseActivity"></activity>
     </application>
 
 </manifest>

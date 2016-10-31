@@ -18,9 +18,10 @@ public class Profile {
 
     }
 
-    public static Profile getInstance() {
+    public static Profile getInstance(Context context) {
         if(instance == null) {
             instance = new Profile();
+            instance.load(context);
         }
 
         return instance;

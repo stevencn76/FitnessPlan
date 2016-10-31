@@ -3,7 +3,6 @@ package truestrength.fitnessplan.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.view.menu.ActionMenuItemView;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.util.Profile;
@@ -21,12 +20,10 @@ public class SplashActivity extends AppCompatActivity {
                     Thread.sleep(1000);
                 } catch (Exception e) {}
 
-                Profile.getInstance().load(SplashActivity.this);
-
                 SplashActivity.this.finish();
 
-                if(Profile.getInstance().isDeclaimerAgreed()) {
-                    Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                if(Profile.getInstance(SplashActivity.this).isDeclaimerAgreed()) {
+                    Intent i = new Intent(SplashActivity.this, PlanListActivity.class);
                     startActivity(i);
                 } else {
                     Intent i = new Intent(SplashActivity.this, DeclaimerActivity.class);

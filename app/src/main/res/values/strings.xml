@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fitness Plan</string>
+    <string name="title_plan_list">Plan List</string>
+    <string name="title_plan_detail">Plan Details</string>
+    <string name="title_create_plan">Create New Plan</string>
+    <string name="title_exercise">Exercise Details</string>
+    <string name="title_exercise_list">Day Exercises</string>
 </resources>
