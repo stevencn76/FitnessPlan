@@ -9,7 +9,6 @@ import android.widget.ExpandableListView;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.adapter.ExerciseExpandListAdapter;
-import truestrength.fitnessplan.entity.Exercise;
 
 public class ExerciseListActivity extends AppCompatActivity {
     private ExpandableListView exerciseExListView;

@@ -11,11 +11,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import truestrength.fitnessplan.R;
-import truestrength.fitnessplan.entity.Day;
-import truestrength.fitnessplan.entity.Exercise;
+import truestrength.fitnessplan.entity.DayExercise;
 import truestrength.fitnessplan.entity.Group;
-import truestrength.fitnessplan.entity.Week;
-import truestrength.fitnessplan.util.DateUtil;
 
 /**
  * Created by steven on 31/10/16.
@@ -31,32 +28,32 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
         Group g;
         g = new Group(1, 1, "Warm up:", 1);
         groupList.add(g);
-        g.getExercises().add(new Exercise(1, 1, "1a", "Foam Roll", true));
-        g.getExercises().add(new Exercise(2, 1, "1b", "Mobility/Activations Drills", true));
-        g.getExercises().add(new Exercise(3, 1, "1c", "Rotator Cuff Work", true));
+        g.getExercises().add(new DayExercise(1, 1, "1a", "Foam Roll", true));
+        g.getExercises().add(new DayExercise(2, 1, "1b", "Mobility/Activations Drills", true));
+        g.getExercises().add(new DayExercise(3, 1, "1c", "Rotator Cuff Work", true));
 
         g = new Group(2, 1, "Strength:", 2);
         groupList.add(g);
-        g.getExercises().add(new Exercise(4, 2, "2", "Bench Press", true));
-        g.getExercises().add(new Exercise(5, 2, "3", "Pendlay Row", true));
+        g.getExercises().add(new DayExercise(4, 2, "2", "Bench Press", true));
+        g.getExercises().add(new DayExercise(5, 2, "3", "Pendlay Row", true));
 
         g = new Group(3, 1, "Conditioning:", 3);
         groupList.add(g);
-        g.getExercises().add(new Exercise(6, 3, "4a", "Incline DB Press*", true));
-        g.getExercises().add(new Exercise(7, 3, "4b", "Pull Ups", true));
-        g.getExercises().add(new Exercise(8, 3, "5a", "Cable Crossover", true));
-        g.getExercises().add(new Exercise(9, 3, "5b", "Chest Dips", true));
-        g.getExercises().add(new Exercise(10, 3, "6a", "Lat Pulldown", false));
-        g.getExercises().add(new Exercise(11, 3, "6b", "T-Bar Row", false));
-        g.getExercises().add(new Exercise(12, 3, "7a", "Cook-Willis Press", false));
-        g.getExercises().add(new Exercise(13, 3, "7b", "Cable Pullovers", false));
+        g.getExercises().add(new DayExercise(6, 3, "4a", "Incline DB Press*", true));
+        g.getExercises().add(new DayExercise(7, 3, "4b", "Pull Ups", true));
+        g.getExercises().add(new DayExercise(8, 3, "5a", "Cable Crossover", true));
+        g.getExercises().add(new DayExercise(9, 3, "5b", "Chest Dips", true));
+        g.getExercises().add(new DayExercise(10, 3, "6a", "Lat Pulldown", false));
+        g.getExercises().add(new DayExercise(11, 3, "6b", "T-Bar Row", false));
+        g.getExercises().add(new DayExercise(12, 3, "7a", "Cook-Willis Press", false));
+        g.getExercises().add(new DayExercise(13, 3, "7b", "Cable Pullovers", false));
 
         g = new Group(4, 1, "Abs:", 4);
         groupList.add(g);
-        g.getExercises().add(new Exercise(14, 4, "", "Hanging Knee Raise", false));
-        g.getExercises().add(new Exercise(15, 4, "", "SB Crunch w. Rotation", false));
-        g.getExercises().add(new Exercise(16, 4, "", "SB Crunch", false));
-        g.getExercises().add(new Exercise(17, 4, "", "Stick Twists", false));
+        g.getExercises().add(new DayExercise(14, 4, "", "Hanging Knee Raise", false));
+        g.getExercises().add(new DayExercise(15, 4, "", "SB Crunch w. Rotation", false));
+        g.getExercises().add(new DayExercise(16, 4, "", "SB Crunch", false));
+        g.getExercises().add(new DayExercise(17, 4, "", "Stick Twists", false));
 
     }
 
@@ -122,7 +119,7 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
             view = vi.inflate(R.layout.exercise_item, null);
         }
 
-        Exercise e = (Exercise)getChild(i, i1);
+        DayExercise e = (DayExercise)getChild(i, i1);
         if(e != null) {
             TextView titleView = (TextView)view.findViewById(R.id.titleTextView);
             if(titleView != null) {

@@ -12,7 +12,7 @@ public class Group {
     private String name;
     private int seq;
 
-    private ArrayList<Exercise> exercises = new ArrayList<>();
+    private ArrayList<DayExercise> exercises = new ArrayList<>();
 
     public Group() {
 
@@ -57,7 +57,7 @@ public class Group {
         this.seq = seq;
     }
 
-    public ArrayList<Exercise> getExercises() {
+    public ArrayList<DayExercise> getExercises() {
         return exercises;
     }
 }
