@@ -5,4 +5,5 @@
     <string name="title_create_plan">Create New Plan</string>
     <string name="title_exercise">Exercise Details</string>
     <string name="title_exercise_list">Day Exercises</string>
+    <string name="declaimer">1. ... \n 2. ... \n 3. ...</string>
 </resources>
