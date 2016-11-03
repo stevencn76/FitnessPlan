@@ -42,6 +42,11 @@ public class ActionHandler {
 
     public void createAction(Action a) {
         SQLiteDatabase db = helper.getWritableDatabase();
+        createAction(db, a);
+        db.close();
+    }
+
+    public void createAction(SQLiteDatabase db, Action a) {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, a.getId());
         values.put(KEY_NAME, a.getName());
@@ -49,7 +54,6 @@ public class ActionHandler {
         values.put(KEY_DESC, a.getDescription());
 
         db.insert(TABLE_NAME, null, values);
-        db.close();
     }
 
     public Action getAction(int id) {
@@ -62,7 +66,7 @@ public class ActionHandler {
             cursor.moveToFirst();
 
         Action a = new Action();
-        a.setId(Integer.parseInt(cursor.getString(0)));
+        a.setId(cursor.getInt(0));
         a.setName(cursor.getString(1));
         a.setPicture(cursor.getString(2));
         a.setDescription(cursor.getString(3));
@@ -102,9 +106,13 @@ public class ActionHandler {
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        String sql = "delete from " + TABLE_NAME;
-        db.execSQL(sql);
+        deleteAll(db);
 
         db.close();
+    }
+
+    public void deleteAll(SQLiteDatabase db) {
+        String sql = "delete from " + TABLE_NAME;
+        db.execSQL(sql);
     }
 }

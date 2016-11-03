@@ -1,0 +1,107 @@
+Version: 1
+
+//Workouts definition
+--Workouts
+//  ID   |  NAME
+    1    |  Chest/Back	(Strength)
+    2    |  Shoulders/Arms	(Strength)
+    3    |  Legs	(Strength)
+    4    |  Chest/Back	(Hyper)
+    5    |  Shoulders/Arms	(Hyper)
+    6    |  Legs	(Hyper)
+    7    |  Chest/Back	(Volume)
+    8    |  Shoulders/Arms	(Volume)
+    9    |  Legs	(Volume)
+
+//Actions definition
+--Actions
+//  ID  |   NAME                        |       PICTURE     |   DESCRIPTION
+    1   | Foam Roll                     | foam_roll         |
+    2   | Mobility/Activation           | mob_act           |
+    3   | Squats                        | squats            |
+    4   | Sumo Deadlift                 | sumo_deadlift     |
+    5   | Leg Press                     | leg_press         |
+    6   | DB SL Deadlift                | db_sl_deadlift    |
+    7   | Walking Lunges                | walk_lunges       |
+    8   | Hamstring Curl                | hamstring_curl    |
+    9   | Leg Extension                 | leg_extension     |
+    10  | Standing Calf Raise           | stand_calf_raise  |
+    11  | Seated Calf Raise             | seat_calf_raise   |
+    12  | Mobility/Activations Drills   | mob_act_drills    |
+    13  | Rotator Cuff Work             | rot_cuff_work     |
+    14  | Bench Press                   | bench_press       |
+    15  | Pendlay Row                   | pend_row          |
+    16  | Incline DB Press              | inc_db_press      |
+    17  | Cable Pull Overs              | cable_pull_overs  |
+    18  | Chest Press                   | chest_press       |
+    19  | Lat Pulldown                  | lat_pulldown      |
+    20  | Cable Cross Over              | cable_cross_over  |
+    21  | T-Bar Row                     | t_bar_row         |
+    22  | Cook-Willis Press             | cook_willis_press |
+    23  | Pull Ups                      | pull_ups          |
+    24  | Standing Overhead Press       | stand_overhead_pr |
+    25  | DB Shoulder Press             | db_shoulder_press |
+    26  | Lateral Raise                 | lateral_raise     |
+    27  | Rear Delt Fly                 | rear_delt_fly     |
+    28  | Face Pulls                    | face_pulls        |
+    29  | BB Curl                       | db_curl           |
+    30  | Dips                          | dips              |
+    31  | Rope Pushdown                 | rope_pushdown     |
+    32  | Hammer Curl                   | hammer_curl       |
+    33  | Triceps Pushdown              | triceps_pushdown  |
+    34  | Front Squats                  | front_squats      |
+    35  | Back Squat                    | back_squat        |
+    36  | SL Deadlift                   | sl_deadlift       |
+    37  | Cable Crossover               | cable_crossover   |
+    38  | Chest Dips                    | chest_dips        |
+    39  | Cable Pullover                | cable_pullover    |
+    40  | BB Curl                       | bb_curl           |
+    41  | DB Overhead Press             | db_overhead_press |
+    42  | Box Jumps                     | box_jump          |
+    43  | GHR                           | ghr               |
+    44  | Split Squat                   | split_squat       |
+    45  | CG Press                      | cg_press          |
+    46  | Seated Row                    | seated_row        |
+    47  | BB Front Raise                | bb_front_raise    |
+
+//Exercise Definition
+--Exercises
+// WORKOUT_ID|INDEX|  GROUPNAME  |ACTION_ID|  SETS    |  REPS  |  LOAD  |  TEMPO  |  REST  | COMMENTS
+    1        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    1        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    1        | 1c  | Warm Up     | 3       | 2-3 sets | 12-15  |        |         |        |
+    1        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    1        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    1        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    1        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    1        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    1        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+    1        | 6a  | Strength    | 10      | x3       | 12-15  |        |         |        |
+    1        | 6b  | Strength    | 11      | x3       | 8-10   |        |         | 30sec  |
+    1        | 7a  | Strength    | 12      | x3       | 12-15  |        |         |        |
+    1        | 7b  | Strength    | 13      | x3       | 8-10   |        |         | 30sec  |
+
+//DayWorkouts Definition
+--DayWorkouts
+// WEEK|DAY|WORKOUT_ID
+    1  | 1 | 1
+    1  | 2 | 2
+    1  | 3 | 3
+    1  | 4 | 4
+    1  | 5 | 5
+    1  | 6 | 6
+    1  | 7 | 0
+    2  | 1 | 1
+    2  | 2 | 2
+    2  | 3 | 3
+    2  | 4 | 4
+    2  | 5 | 5
+    2  | 6 | 6
+    2  | 7 | 0
+    3  | 1 | 7
+    3  | 2 | 8
+    3  | 3 | 9
+    3  | 4 | 7
+    3  | 5 | 8
+    3  | 6 | 9
+    3  | 7 | 0

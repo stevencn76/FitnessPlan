@@ -19,6 +19,11 @@ public class DateUtil {
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
+    public static long diffDays(String startDate, String endDate) {
+        long diff = toDate(endDate).getTime() - toDate(startDate).getTime() + (24 * 3600 * 1000);
+        return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+    }
+
     public static Date toDate(String strDate) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 

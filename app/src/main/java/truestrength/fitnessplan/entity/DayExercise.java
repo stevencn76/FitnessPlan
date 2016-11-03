@@ -6,20 +6,18 @@ package truestrength.fitnessplan.entity;
 
 public class DayExercise {
     private int id;
-    private int groupId;
-    private String seq;
-    private String name;
+    private int dayId;
+    private int exerciseId;
     private boolean done;
 
     public DayExercise() {
 
     }
 
-    public DayExercise(int id, int groupId, String seq, String name, boolean done) {
+    public DayExercise(int id, int dayId, int exerciseId, boolean done) {
         this.id = id;
-        this.groupId = groupId;
-        this.seq = seq;
-        this.name = name;
+        this.dayId = dayId;
+        this.exerciseId = exerciseId;
         this.done = done;
     }
 
@@ -31,28 +29,20 @@ public class DayExercise {
         this.id = id;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public int getDayId() {
+        return dayId;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setDayId(int dayId) {
+        this.dayId = dayId;
     }
 
-    public String getSeq() {
-        return seq;
+    public int getExerciseId() {
+        return exerciseId;
     }
 
-    public void setSeq(String seq) {
-        this.seq = seq;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setExerciseId(int exerciseId) {
+        this.exerciseId = exerciseId;
     }
 
     public boolean isDone() {

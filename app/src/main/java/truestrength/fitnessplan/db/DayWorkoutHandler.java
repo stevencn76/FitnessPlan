@@ -42,6 +42,11 @@ public class DayWorkoutHandler {
 
     public void createDayWorkout(DayWorkout dw) {
         SQLiteDatabase db = helper.getWritableDatabase();
+        createDayWorkout(db, dw);
+        db.close();
+    }
+
+    public void createDayWorkout(SQLiteDatabase db, DayWorkout dw) {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, dw.getId());
         values.put(KEY_WEEK, dw.getWeek());
@@ -49,7 +54,6 @@ public class DayWorkoutHandler {
         values.put(KEY_WORKOUTID, dw.getWorkoutId());
 
         db.insert(TABLE_NAME, null, values);
-        db.close();
     }
 
     public DayWorkout getDayWorkout(int id) {
@@ -102,9 +106,13 @@ public class DayWorkoutHandler {
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        String sql = "delete from " + TABLE_NAME;
-        db.execSQL(sql);
+        deleteAll(db);
 
         db.close();
+    }
+
+    public void deleteAll(SQLiteDatabase db) {
+        String sql = "delete from " + TABLE_NAME;
+        db.execSQL(sql);
     }
 }

@@ -53,6 +53,11 @@ public class ExerciseHandler {
 
     public void createExercise(Exercise e) {
         SQLiteDatabase db = helper.getWritableDatabase();
+        createExercise(db, e);
+        db.close();
+    }
+
+    public void createExercise(SQLiteDatabase db, Exercise e) {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, e.getId());
         values.put(KEY_WORKOUTID, e.getWorkoutId());
@@ -67,7 +72,6 @@ public class ExerciseHandler {
         values.put(KEY_COMMENTS, e.getComments());
 
         db.insert(TABLE_NAME, null, values);
-        db.close();
     }
 
     public Exercise getExercise(int id) {
@@ -136,9 +140,13 @@ public class ExerciseHandler {
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        String sql = "delete from " + TABLE_NAME;
-        db.execSQL(sql);
+        deleteAll(db);
 
         db.close();
+    }
+
+    public void deleteAll(SQLiteDatabase db) {
+        String sql = "delete from " + TABLE_NAME;
+        db.execSQL(sql);
     }
 }

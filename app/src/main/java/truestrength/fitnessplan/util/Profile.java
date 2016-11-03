@@ -14,6 +14,9 @@ public class Profile {
     private static final String DECLAIMERAGREED_KEY = "DECLAIMERAGREED";
     private boolean declaimerAgreed;
 
+    private static final String DATAVERSION_KEY = "DATAVERSION";
+    private String dataVersion;
+
     private Profile() {
 
     }
@@ -31,6 +34,7 @@ public class Profile {
         SharedPreferences sp = context.getSharedPreferences(FPP_PREFERENCES, Context.MODE_PRIVATE);
 
         declaimerAgreed = sp.getBoolean(DECLAIMERAGREED_KEY, false);
+        dataVersion = sp.getString(DATAVERSION_KEY, "");
     }
 
     public void save(Context context) {
@@ -39,6 +43,7 @@ public class Profile {
         SharedPreferences.Editor editor = sp.edit();
 
         editor.putBoolean(DECLAIMERAGREED_KEY, declaimerAgreed);
+        editor.putString(DATAVERSION_KEY, dataVersion);
 
         editor.commit();
 
@@ -50,5 +55,13 @@ public class Profile {
 
     public void setDeclaimerAgreed(boolean declaimerAgreed) {
         this.declaimerAgreed = declaimerAgreed;
+    }
+
+    public String getDataVersion() {
+        return dataVersion;
+    }
+
+    public void setDataVersion(String dataVersion) {
+        this.dataVersion = dataVersion;
     }
 }

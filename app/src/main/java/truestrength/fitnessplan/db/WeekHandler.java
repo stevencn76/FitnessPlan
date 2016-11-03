@@ -8,26 +8,30 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import truestrength.fitnessplan.entity.Workout;
+import truestrength.fitnessplan.entity.Plan;
+import truestrength.fitnessplan.entity.Week;
 
 /**
  * Created by steven on 1/11/16.
  */
 
-public class WorkoutHandler {
+public class WeekHandler {
     private SQLiteOpenHelper helper;
 
-    public static final String TABLE_NAME = "workouts";
-    public static final String KEY_ID = "wo_id";
-    public static final String KEY_NAME = "wo_name";
+    public static final String TABLE_NAME = "weeks";
+    public static final String KEY_ID = "we_id";
+    public static final String KEY_PLANID = "we_planid";
+    public static final String KEY_NUMBER = "we_number";
+    public static final String KEY_PROGRESS = "pl_progress";
 
-    public WorkoutHandler(SQLiteOpenHelper helper) {
+    public WeekHandler(SQLiteOpenHelper helper) {
         this.helper = helper;
     }
 
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABLE_NAME + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_PLANID + " INTEGER,"
+                + KEY_NUMBER + " INTEGER," + KEY_PROGRESS + " INTEGER"
                 + ")";
         db.execSQL(sql);
     }
@@ -36,40 +40,56 @@ public class WorkoutHandler {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public void createWorkout(Workout w) {
+    public void createWeek(Week w) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        createWorkout(db, w);
+        createWeek(db, w);
         db.close();
     }
 
-    public void createWorkout(SQLiteDatabase db, Workout w) {
+    private int nextId(SQLiteDatabase db) {
+        Cursor cursor = db.rawQuery("select max(" + KEY_ID + ") from " + TABLE_NAME, null);
+        int newId = 1;
+        if (cursor != null && cursor.moveToFirst()) {
+            newId = cursor.getInt(0) + 1;
+        }
+
+        return newId;
+    }
+
+    public void createWeek(SQLiteDatabase db, Week w) {
+        w.setId(nextId(db));
+
         ContentValues values = new ContentValues();
         values.put(KEY_ID, w.getId());
-        values.put(KEY_NAME, w.getName());
+        values.put(KEY_PLANID, w.getPlanId());
+        values.put(KEY_NUMBER, w.getNumber());
+        values.put(KEY_PROGRESS, w.getProgress());
 
         db.insert(TABLE_NAME, null, values);
     }
 
-    public Workout getWorkout(int id) {
+    public Week getWeek(int id) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID,
-                        KEY_NAME }, KEY_ID + "=?",
+                        KEY_PLANID, KEY_NUMBER, KEY_PROGRESS }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Workout c = new Workout();
-        c.setId(Integer.parseInt(cursor.getString(0)));
-        c.setName(cursor.getString(1));
+        Week w = new Week();
+        w.setId(cursor.getInt(0));
+        w.setPlanId(cursor.getInt(1));
+        w.setNumber(cursor.getInt(2));
+        w.setProgress(cursor.getInt(3));
 
         db.close();
 
-        return c;
+        return w;
     }
 
-    public List<Workout> getAllWorkouts() {
-        List<Workout> workoutList = new ArrayList<>();
+    public List<Week> getAllPlans() {
+        List<Week> weekList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
@@ -79,18 +99,20 @@ public class WorkoutHandler {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Workout c = new Workout();
-                c.setId(cursor.getInt(0));
-                c.setName(cursor.getString(1));
+                Week w = new Week();
+                w.setId(cursor.getInt(0));
+                w.setPlanId(cursor.getInt(1));
+                w.setNumber(cursor.getInt(2));
+                w.setProgress(cursor.getInt(3));
                 // Adding to list
-                workoutList.add(c);
+                weekList.add(w);
             } while (cursor.moveToNext());
         }
 
         db.close();
 
         // return list
-        return workoutList;
+        return weekList;
     }
 
     public void deleteAll() {
