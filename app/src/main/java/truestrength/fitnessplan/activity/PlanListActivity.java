@@ -3,15 +3,18 @@ package truestrength.fitnessplan.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.adapter.PlanListAdapter;
+import truestrength.fitnessplan.common.MySettings;
 import truestrength.fitnessplan.service.DataService;
 import truestrength.fitnessplan.entity.Plan;
 
@@ -63,7 +66,9 @@ public class PlanListActivity extends AppCompatActivity implements PopupMenu.OnM
     protected void onStart() {
         super.onStart();
 
-        if(!hasShownCreatePlan && DataService.getInstance(this).getPlanCount() == 0) {
+        planListAdapter.reload();
+
+        if(!hasShownCreatePlan && planListAdapter.getCount() == 0) {
             hasShownCreatePlan = true;
             Intent i = new Intent(this, CreatePlanActivity.class);
             startActivity(i);
@@ -78,9 +83,19 @@ public class PlanListActivity extends AppCompatActivity implements PopupMenu.OnM
     @Override
     public boolean onMenuItemClick(MenuItem menuItem) {
         if(curPlan != null) {
-            planListAdapter.remove(curPlan);
+            try {
+                DataService.getInstance(this).deletePlan(curPlan.getId());
+                planListAdapter.remove(curPlan);
 
-            curPlan = null;
+                curPlan = null;
+
+                planListAdapter.reload();
+
+                Toast.makeText(this, "Delete plan successfully", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Log.d(MySettings.LOG_TAG, "delete plan failed", e);
+                Toast.makeText(this, "Delete plan failed, " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
         }
 
         return true;

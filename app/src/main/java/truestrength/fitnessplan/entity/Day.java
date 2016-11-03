@@ -1,17 +1,21 @@
 package truestrength.fitnessplan.entity;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import truestrength.fitnessplan.util.DateUtil;
 
 /**
  * Created by steven on 31/10/16.
  */
 
-public class Day {
+public class Day implements Serializable {
     private int id;
     private int weekId;
     private String date;
     private int dayWorkoutId;
     private int progress;
+    private String sqlDate;
 
     public Day() {
 
@@ -20,7 +24,7 @@ public class Day {
     public Day(int id, int weekId, String date, int dayWorkoutId, int progress) {
         this.id = id;
         this.weekId = weekId;
-        this.date = date;
+        setDate(date);
         this.dayWorkoutId = dayWorkoutId;
         this.progress = progress;
     }
@@ -47,6 +51,8 @@ public class Day {
 
     public void setDate(String date) {
         this.date = date;
+        Date td = DateUtil.fromDateString(date);
+        sqlDate = DateUtil.toSqlDateString(td);
     }
 
     public int getDayWorkoutId() {
@@ -63,5 +69,15 @@ public class Day {
 
     public void setProgress(int progress) {
         this.progress = progress;
+    }
+
+    public void setSqlDate(String sqlDate) {
+        this.sqlDate = sqlDate;
+        Date td = DateUtil.fromSqlDateString(sqlDate);
+        date = DateUtil.toDateString(td);
+    }
+
+    public String getSqlDate() {
+        return sqlDate;
     }
 }

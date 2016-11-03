@@ -2,8 +2,6 @@ package truestrength.fitnessplan.util;
 
 
 
-import android.util.TimeUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,11 +18,11 @@ public class DateUtil {
     }
 
     public static long diffDays(String startDate, String endDate) {
-        long diff = toDate(endDate).getTime() - toDate(startDate).getTime() + (24 * 3600 * 1000);
+        long diff = fromDateString(endDate).getTime() - fromDateString(startDate).getTime() + (24 * 3600 * 1000);
         return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
     }
 
-    public static Date toDate(String strDate) {
+    public static Date fromDateString(String strDate) {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 
         try {
@@ -34,8 +32,24 @@ public class DateUtil {
         }
     }
 
+    public static Date fromSqlDateString(String strDate) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            return format.parse(strDate);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
     public static String toDateString(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        return format.format(date);
+    }
+
+    public static String toSqlDateString(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         return format.format(date);
     }

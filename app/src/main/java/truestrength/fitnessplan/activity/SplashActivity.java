@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.db.MyDB;
+import truestrength.fitnessplan.service.DataService;
 import truestrength.fitnessplan.util.Profile;
 
 public class SplashActivity extends AppCompatActivity {
@@ -17,8 +18,7 @@ public class SplashActivity extends AppCompatActivity {
 
         new Thread() {
             public void run() {
-                MyDB db = new MyDB(SplashActivity.this);
-                db.reloadWorkouts();
+                DataService.getInstance(SplashActivity.this).initService();
 
                 try {
                     Thread.sleep(1000);

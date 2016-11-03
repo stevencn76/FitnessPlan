@@ -1,10 +1,12 @@
 package truestrength.fitnessplan.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by steven on 31/10/16.
  */
 
-public class Week {
+public class Week implements Serializable {
     private int id;
     private int planId;
     private int number;

@@ -64,7 +64,7 @@ public class DayHandler {
         ContentValues values = new ContentValues();
         values.put(KEY_ID, d.getId());
         values.put(KEY_WEEKID, d.getWeekId());
-        values.put(KEY_DATE, d.getDate());
+        values.put(KEY_DATE, d.getSqlDate());
         values.put(KEY_DAYWORKOUTID, d.getDayWorkoutId());
         values.put(KEY_PROGRESS, d.getProgress());
 
@@ -83,7 +83,7 @@ public class DayHandler {
         Day d = new Day();
         d.setId(cursor.getInt(0));
         d.setWeekId(cursor.getInt(1));
-        d.setDate(cursor.getString(2));
+        d.setSqlDate(cursor.getString(2));
         d.setDayWorkoutId(cursor.getInt(3));
         d.setProgress(cursor.getInt(4));
 
@@ -106,7 +106,36 @@ public class DayHandler {
                 Day d = new Day();
                 d.setId(cursor.getInt(0));
                 d.setWeekId(cursor.getInt(1));
-                d.setDate(cursor.getString(2));
+                d.setSqlDate(cursor.getString(2));
+                d.setDayWorkoutId(cursor.getInt(3));
+                d.setProgress(cursor.getInt(4));
+                // Adding to list
+                dayList.add(d);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        // return list
+        return dayList;
+    }
+
+    public List<Day> getDays(int weekId) {
+        List<Day> dayList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME
+                + " WHERE " + KEY_WEEKID + "=" + weekId;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Day d = new Day();
+                d.setId(cursor.getInt(0));
+                d.setWeekId(cursor.getInt(1));
+                d.setSqlDate(cursor.getString(2));
                 d.setDayWorkoutId(cursor.getInt(3));
                 d.setProgress(cursor.getInt(4));
                 // Adding to list

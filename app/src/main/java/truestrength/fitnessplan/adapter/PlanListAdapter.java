@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import java.text.MessageFormat;
 import java.util.Date;
+import java.util.List;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.entity.Plan;
+import truestrength.fitnessplan.service.DataService;
 import truestrength.fitnessplan.util.DateUtil;
 
 /**
@@ -20,16 +22,21 @@ import truestrength.fitnessplan.util.DateUtil;
  */
 
 public class PlanListAdapter extends ArrayAdapter<Plan> {
+    private String today;
+
     public PlanListAdapter(Context context) {
         super(context, R.layout.plan_list_item);
-
-        load();
     }
 
-    private void load() {
-        this.add(new Plan(1, "03/10/2016", "23/10/2016", 100));
-        this.add(new Plan(2, "24/10/2016", "13/11/2016", 40));
-        this.add(new Plan(3, "14/11/2016", "04/12/2016", 0));
+    public void reload() {
+        today = DateUtil.toSqlDateString(new Date());
+
+        this.clear();
+
+        List<Plan> planList = DataService.getInstance(getContext()).getAllPlans();
+        for(Plan tp : planList) {
+            this.add(tp);
+        }
     }
 
     @Override
@@ -58,18 +65,16 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
                 tt2.setText(p.getProgress() + "%");
             }
 
-            Date today = new Date();
-/*
-            if(today.after(p.getEndDate())) {
-                tt1.setTextColor(Color.LTGRAY);
-                tt1.setTextColor(Color.LTGRAY);
-            } else if(today.before(p.getStartDate())) {
-                tt1.setTextColor(Color.BLACK);
-                tt1.setTextColor(Color.BLACK);
-            } else {
-*/                tt1.setTextColor(Color.BLUE);
+            if(today.compareTo(p.getSqlEndDate()) > 0) {
+                tt1.setTextColor(Color.DKGRAY);
+                tt1.setTextColor(Color.DKGRAY);
+            } else if(today.compareTo(p.getSqlStartDate()) < 0) {
                 tt1.setTextColor(Color.BLUE);
-//            }
+                tt1.setTextColor(Color.BLUE);
+            } else {
+                tt1.setTextColor(Color.RED);
+                tt1.setTextColor(Color.RED);
+            }
         }
 
         return v;

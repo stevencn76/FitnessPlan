@@ -88,10 +88,38 @@ public class WeekHandler {
         return w;
     }
 
-    public List<Week> getAllPlans() {
+    public List<Week> getAllWeeks() {
         List<Week> weekList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Week w = new Week();
+                w.setId(cursor.getInt(0));
+                w.setPlanId(cursor.getInt(1));
+                w.setNumber(cursor.getInt(2));
+                w.setProgress(cursor.getInt(3));
+                // Adding to list
+                weekList.add(w);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        // return list
+        return weekList;
+    }
+
+    public List<Week> getWeeks(int planId) {
+        List<Week> weekList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE "
+                + KEY_PLANID + "=" + planId;
 
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

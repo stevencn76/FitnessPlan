@@ -1,10 +1,12 @@
 package truestrength.fitnessplan.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by steven on 1/11/16.
  */
 
-public class Action {
+public class Action implements Serializable {
     private int id;
     private String name;
     private String picture;

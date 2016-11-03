@@ -103,6 +103,22 @@ public class DayWorkoutHandler {
         return dayWorkoutList;
     }
 
+    public int getWeekCount() {
+        int count = 0;
+        String selectQuery = "SELECT  count(distinct " + KEY_WEEK + ") FROM " + TABLE_NAME;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            count = cursor.getInt(0);
+        }
+
+        db.close();
+
+        return count;
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

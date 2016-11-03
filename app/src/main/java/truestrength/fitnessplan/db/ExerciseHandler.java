@@ -106,7 +106,45 @@ public class ExerciseHandler {
     public List<Exercise> getAllExercises() {
         List<Exercise> exerciseList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY "
+                + KEY_WORKOUTID + " ASC, " + KEY_INDEX + " ASC";
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Exercise e = new Exercise();
+                e.setId(cursor.getInt(0));
+                e.setWorkoutId(cursor.getInt(1));
+                e.setIndex(cursor.getString(2));
+                e.setGroupName(cursor.getString(3));
+                e.setActionId(cursor.getInt(4));
+                e.setSets(cursor.getString(5));
+                e.setReps(cursor.getString(6));
+                e.setLoad(cursor.getString(7));
+                e.setTempo(cursor.getString(8));
+                e.setRest(cursor.getString(9));
+                e.setComments(cursor.getString(10));
+                // Adding to list
+                exerciseList.add(e);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        // return list
+        return exerciseList;
+    }
+
+    public List<Exercise> getExercises(int workoutId) {
+        List<Exercise> exerciseList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME
+                + " WHERE " + KEY_WORKOUTID + "=" + workoutId
+                + " ORDER BY "
+                + KEY_INDEX + " ASC";
 
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

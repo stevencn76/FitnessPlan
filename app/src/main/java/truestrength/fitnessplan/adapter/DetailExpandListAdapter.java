@@ -1,19 +1,23 @@
 package truestrength.fitnessplan.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import truestrength.fitnessplan.R;
+import truestrength.fitnessplan.cache.WeekCache;
 import truestrength.fitnessplan.entity.Day;
+import truestrength.fitnessplan.entity.Plan;
 import truestrength.fitnessplan.entity.Week;
+import truestrength.fitnessplan.service.DataService;
 import truestrength.fitnessplan.util.DateUtil;
 
 /**
@@ -22,24 +26,43 @@ import truestrength.fitnessplan.util.DateUtil;
 
 public class DetailExpandListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private ArrayList<Week> weekList = new ArrayList<>();
-    private ArrayList<ArrayList<Day>> weekDayList = new ArrayList<>();
+    private ArrayList<WeekCache> weekCacheList = new ArrayList<>();
     private int curWeekIndex = -1;
+    private Plan plan;
+    private String today;
 
-    public DetailExpandListAdapter(Context context) {
+    public DetailExpandListAdapter(Context context, Plan plan) {
         this.context = context;
-
-        weekList.add(new Week(1, 1, 1, 100));
-        weekDayList.add(new ArrayList<Day>());
-        weekDayList.get(0).add(new Day(1, 1, "24/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(2, 1, "25/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(3, 1, "26/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(4, 1, "27/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(5, 1, "28/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(6, 1, "29/10/2016", 1, 100));
-        weekDayList.get(0).add(new Day(7, 1, "30/10/2016", 1, 100));
+        this.plan = plan;
 
         curWeekIndex = 0;
+    }
+
+    public void reload() {
+        weekCacheList.clear();
+
+        today = DateUtil.toSqlDateString(new Date());
+
+        List<Week> weekList = DataService.getInstance(context).getWeeks(plan.getId());
+        int index = 0;
+        for(Week tw : weekList) {
+            WeekCache wc = new WeekCache();
+            wc.setWeek(tw);
+
+            List<Day> dayList = DataService.getInstance(context).getDays(tw.getId());
+            for(Day td : dayList) {
+                wc.getDayList().add(td);
+
+                if(td.getSqlDate().equals(today)) {
+                    curWeekIndex = index;
+                }
+            }
+
+            weekCacheList.add(wc);
+            index ++;
+        }
+
+        this.notifyDataSetChanged();
     }
 
     public int getCurWeekIndex() {
@@ -48,32 +71,32 @@ public class DetailExpandListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return weekList.size();
+        return weekCacheList.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return weekDayList.get(i).size();
+        return weekCacheList.get(i).getDayList().size();
     }
 
     @Override
     public Object getGroup(int i) {
-        return weekList.get(i);
+        return weekCacheList.get(i).getWeek();
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        return weekDayList.get(i).get(i1);
+        return weekCacheList.get(i).getDayList().get(i1);
     }
 
     @Override
     public long getGroupId(int i) {
-        return weekList.get(i).getId();
+        return weekCacheList.get(i).getWeek().getId();
     }
 
     @Override
     public long getChildId(int i, int i1) {
-        return weekDayList.get(i).get(i1).getId();
+        return weekCacheList.get(i).getDayList().get(i1).getId();
     }
 
     @Override
@@ -123,6 +146,18 @@ public class DetailExpandListAdapter extends BaseExpandableListAdapter {
             TextView progressTextView = (TextView)view.findViewById(R.id.progressTextView);
             if(progressTextView != null) {
                 progressTextView.setText(day.getProgress() + "%");
+            }
+
+            int c = day.getSqlDate().compareTo(today);
+            if(c < 0) {
+                titleView.setTextColor(Color.DKGRAY);
+                progressTextView.setTextColor(Color.DKGRAY);
+            } else if(c == 0) {
+                titleView.setTextColor(Color.RED);
+                progressTextView.setTextColor(Color.RED);
+            } else {
+                titleView.setTextColor(Color.BLUE);
+                progressTextView.setTextColor(Color.BLUE);
             }
         }
 

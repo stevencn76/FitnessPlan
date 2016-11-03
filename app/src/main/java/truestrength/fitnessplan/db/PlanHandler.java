@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import truestrength.fitnessplan.entity.Action;
+import truestrength.fitnessplan.entity.DayExercise;
 import truestrength.fitnessplan.entity.Plan;
 
 /**
@@ -64,8 +65,8 @@ public class PlanHandler {
 
         ContentValues values = new ContentValues();
         values.put(KEY_ID, p.getId());
-        values.put(KEY_STARTDATE, p.getStartDate());
-        values.put(KEY_ENDDATE, p.getEndDate());
+        values.put(KEY_STARTDATE, p.getSqlStartDate());
+        values.put(KEY_ENDDATE, p.getSqlEndDate());
         values.put(KEY_WEEKCOUNT, p.getWeekCount());
         values.put(KEY_PROGRESS, p.getProgress());
 
@@ -83,8 +84,8 @@ public class PlanHandler {
 
         Plan p = new Plan();
         p.setId(cursor.getInt(0));
-        p.setStartDate(cursor.getString(1));
-        p.setEndDate(cursor.getString(2));
+        p.setSqlStartDate(cursor.getString(1));
+        p.setSqlEndDate(cursor.getString(2));
         p.setWeekCount(cursor.getInt(3));
         p.setProgress(cursor.getInt(4));
 
@@ -96,7 +97,7 @@ public class PlanHandler {
     public List<Plan> getAllPlans() {
         List<Plan> planList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " ORDER BY " + KEY_STARTDATE + " ASC";
 
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -106,8 +107,8 @@ public class PlanHandler {
             do {
                 Plan p = new Plan();
                 p.setId(cursor.getInt(0));
-                p.setStartDate(cursor.getString(1));
-                p.setEndDate(cursor.getString(2));
+                p.setSqlStartDate(cursor.getString(1));
+                p.setSqlEndDate(cursor.getString(2));
                 p.setWeekCount(cursor.getInt(3));
                 p.setProgress(cursor.getInt(4));
                 // Adding to list
@@ -119,6 +120,45 @@ public class PlanHandler {
 
         // return list
         return planList;
+    }
+
+    public void deletePlan(int planId) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        //delete dayexercise
+        String sql = "delete from " + DayExerciseHandler.TABLE_NAME
+                + " WHERE " + DayExerciseHandler.KEY_ID + " IN (SELECT de." + DayExerciseHandler.KEY_ID
+                + " FROM " + PlanHandler.TABLE_NAME + " pl," + WeekHandler.TABLE_NAME + " we,"
+                + DayHandler.TABLE_NAME + " da," + DayExerciseHandler.TABLE_NAME + " de WHERE "
+                + "pl." + PlanHandler.KEY_ID + "=we." + WeekHandler.KEY_PLANID
+                + " AND we." + WeekHandler.KEY_ID + "=da." + DayHandler.KEY_WEEKID
+                + " AND da." + DayHandler.KEY_ID + "=de." + DayExerciseHandler.KEY_DAYID
+                + " AND pl." + PlanHandler.KEY_ID + "=" + planId + ")";
+        db.execSQL(sql);
+
+        //delete day
+        sql = "delete from " + DayHandler.TABLE_NAME
+                + " WHERE " + DayHandler.KEY_ID + " IN (SELECT da." + DayHandler.KEY_ID
+                + " FROM " + PlanHandler.TABLE_NAME + " pl," + WeekHandler.TABLE_NAME + " we,"
+                + DayHandler.TABLE_NAME + " da WHERE "
+                + "pl." + PlanHandler.KEY_ID + "=we." + WeekHandler.KEY_PLANID
+                + " AND we." + WeekHandler.KEY_ID + "=da." + DayHandler.KEY_WEEKID
+                + " AND pl." + PlanHandler.KEY_ID + "=" + planId + ")";
+        db.execSQL(sql);
+
+        //delete week
+        sql = "delete from " + WeekHandler.TABLE_NAME
+                + " WHERE " + WeekHandler.KEY_ID + " IN (SELECT we." + WeekHandler.KEY_ID
+                + " FROM " + PlanHandler.TABLE_NAME + " pl," + WeekHandler.TABLE_NAME + " we WHERE "
+                + "pl." + PlanHandler.KEY_ID + "=we." + WeekHandler.KEY_PLANID
+                + " AND pl." + PlanHandler.KEY_ID + "=" + planId + ")";
+        db.execSQL(sql);
+
+        //delete plan
+        sql = "delete from " + TABLE_NAME + " WHERE " + KEY_ID + "=" + planId;
+        db.execSQL(sql);
+
+        db.close();
     }
 
     public void deleteAll() {
