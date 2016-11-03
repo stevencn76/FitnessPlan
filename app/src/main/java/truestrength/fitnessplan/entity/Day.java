@@ -9,7 +9,7 @@ import java.util.Date;
 public class Day {
     private int id;
     private int weekId;
-    private Date date;
+    private String date;
     private int dayWorkoutId;
     private int progress;
 
@@ -17,7 +17,7 @@ public class Day {
 
     }
 
-    public Day(int id, int weekId, Date date, int dayWorkoutId, int progress) {
+    public Day(int id, int weekId, String date, int dayWorkoutId, int progress) {
         this.id = id;
         this.weekId = weekId;
         this.date = date;
@@ -41,11 +41,11 @@ public class Day {
         this.weekId = weekId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
