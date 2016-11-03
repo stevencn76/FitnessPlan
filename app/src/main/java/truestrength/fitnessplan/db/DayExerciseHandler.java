@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import truestrength.fitnessplan.entity.Day;
+import truestrength.fitnessplan.entity.DayExercise;
 
 /**
  * Created by steven on 1/11/16.
@@ -17,12 +18,11 @@ import truestrength.fitnessplan.entity.Day;
 public class DayExerciseHandler {
     private SQLiteOpenHelper helper;
 
-    public static final String TABLE_NAME = "days";
-    public static final String KEY_ID = "da_id";
-    public static final String KEY_WEEKID = "da_weekid";
-    public static final String KEY_DATE = "da_date";
-    public static final String KEY_DAYWORKOUTID = "da_dayworkoutid";
-    public static final String KEY_PROGRESS = "da_progress";
+    public static final String TABLE_NAME = "dayexercises";
+    public static final String KEY_ID = "de_id";
+    public static final String KEY_DAYID = "de_dayid";
+    public static final String KEY_EXERCISEID = "de_exerciseid";
+    public static final String KEY_DONE = "de_done";
 
     public DayExerciseHandler(SQLiteOpenHelper helper) {
         this.helper = helper;
@@ -30,9 +30,8 @@ public class DayExerciseHandler {
 
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABLE_NAME + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_WEEKID + " INTEGER,"
-                + KEY_DATE + " TEXT," + KEY_DAYWORKOUTID + " INTEGER,"
-                + KEY_PROGRESS + " INTEGER"
+                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_DAYID + " INTEGER,"
+                + KEY_EXERCISEID + " INTEGER," + KEY_DONE + " INTEGER"
                 + ")";
         db.execSQL(sql);
     }
@@ -41,9 +40,9 @@ public class DayExerciseHandler {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public void createDay(Day d) {
+    public void createDayExercise(DayExercise de) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        createDay(db, d);
+        createDayExercise(db, de);
         db.close();
     }
 
@@ -57,42 +56,40 @@ public class DayExerciseHandler {
         return newId;
     }
 
-    public void createDay(SQLiteDatabase db, Day d) {
-        d.setId(nextId(db));
+    public void createDayExercise(SQLiteDatabase db, DayExercise de) {
+        de.setId(nextId(db));
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, d.getId());
-        values.put(KEY_WEEKID, d.getWeekId());
-        values.put(KEY_DATE, d.getDate());
-        values.put(KEY_DAYWORKOUTID, d.getDayWorkoutId());
-        values.put(KEY_PROGRESS, d.getProgress());
+        values.put(KEY_ID, de.getId());
+        values.put(KEY_DAYID, de.getDayId());
+        values.put(KEY_EXERCISEID, de.getExerciseId());
+        values.put(KEY_DONE, de.isDone()?1:0);
 
         db.insert(TABLE_NAME, null, values);
     }
 
-    public Day getDay(int id) {
+    public DayExercise getDayExercise(int id) {
         SQLiteDatabase db = helper.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_NAME, new String[] { KEY_ID,
-                        KEY_WEEKID, KEY_DATE, KEY_DAYWORKOUTID, KEY_PROGRESS }, KEY_ID + "=?",
+                        KEY_DAYID, KEY_EXERCISEID, KEY_DONE }, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
-        Day d = new Day();
-        d.setId(cursor.getInt(0));
-        d.setWeekId(cursor.getInt(1));
-        d.setDate(cursor.getString(2));
-        d.setDayWorkoutId(cursor.getInt(3));
-        d.setProgress(cursor.getInt(4));
+        DayExercise de = new DayExercise();
+        de.setId(cursor.getInt(0));
+        de.setDayId(cursor.getInt(1));
+        de.setExerciseId(cursor.getInt(2));
+        de.setDone(cursor.getInt(3) > 0);
 
         db.close();
 
-        return d;
+        return de;
     }
 
-    public List<Day> getAllDays() {
-        List<Day> dayList = new ArrayList<>();
+    public List<DayExercise> getAllDayExercises() {
+        List<DayExercise> dayList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_NAME;
 
@@ -102,14 +99,13 @@ public class DayExerciseHandler {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Day d = new Day();
-                d.setId(cursor.getInt(0));
-                d.setWeekId(cursor.getInt(1));
-                d.setDate(cursor.getString(2));
-                d.setDayWorkoutId(cursor.getInt(3));
-                d.setProgress(cursor.getInt(4));
+                DayExercise de = new DayExercise();
+                de.setId(cursor.getInt(0));
+                de.setDayId(cursor.getInt(1));
+                de.setExerciseId(cursor.getInt(2));
+                de.setDone(cursor.getInt(3) > 0);
                 // Adding to list
-                dayList.add(d);
+                dayList.add(de);
             } while (cursor.moveToNext());
         }
 

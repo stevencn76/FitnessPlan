@@ -19,7 +19,7 @@ import truestrength.fitnessplan.util.WorkoutFileParser;
 
 public class MyDB extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "workouts.db";
 
     private Context context;
@@ -28,6 +28,11 @@ public class MyDB extends SQLiteOpenHelper {
     private ActionHandler actionHandler;
     private ExerciseHandler exerciseHandler;
     private DayWorkoutHandler dayWorkoutHandler;
+
+    private PlanHandler planHandler;
+    private WeekHandler weekHandler;
+    private DayHandler dayHandler;
+    private DayExerciseHandler dayExerciseHandler;
 
     public MyDB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,6 +43,11 @@ public class MyDB extends SQLiteOpenHelper {
         actionHandler = new ActionHandler(this);
         exerciseHandler = new ExerciseHandler(this);
         dayWorkoutHandler = new DayWorkoutHandler(this);
+
+        planHandler = new PlanHandler(this);
+        weekHandler = new WeekHandler(this);
+        dayHandler = new DayHandler(this);
+        dayExerciseHandler = new DayExerciseHandler(this);
     }
 
     @Override
@@ -46,10 +56,20 @@ public class MyDB extends SQLiteOpenHelper {
         actionHandler.onCreate(db);
         exerciseHandler.onCreate(db);
         dayWorkoutHandler.onCreate(db);
+
+        planHandler.onCreate(db);
+        weekHandler.onCreate(db);
+        dayHandler.onCreate(db);
+        dayExerciseHandler.onCreate(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        dayExerciseHandler.onDrop(db);
+        dayHandler.onDrop(db);
+        weekHandler.onDrop(db);
+        planHandler.onDrop(db);
+
         dayWorkoutHandler.onDrop(db);
         exerciseHandler.onDrop(db);
         actionHandler.onDrop(db);
@@ -66,11 +86,36 @@ public class MyDB extends SQLiteOpenHelper {
         return actionHandler;
     }
 
+    public ExerciseHandler getExerciseHandler() {
+        return exerciseHandler;
+    }
+
     public DayWorkoutHandler getDayWorkoutHandler() {
         return dayWorkoutHandler;
     }
 
+    public PlanHandler getPlanHandler() {
+        return planHandler;
+    }
+
+    public WeekHandler getWeekHandler() {
+        return weekHandler;
+    }
+
+    public DayHandler getDayHandler() {
+        return dayHandler;
+    }
+
+    public DayExerciseHandler getDayExerciseHandler() {
+        return dayExerciseHandler;
+    }
+
     private void clearData(SQLiteDatabase db) {
+        dayExerciseHandler.deleteAll(db);
+        dayHandler.deleteAll(db);
+        weekHandler.deleteAll(db);
+        planHandler.deleteAll(db);
+
         dayWorkoutHandler.deleteAll(db);
         exerciseHandler.deleteAll(db);
         actionHandler.deleteAll(db);
@@ -84,9 +129,11 @@ public class MyDB extends SQLiteOpenHelper {
             wfp = new WorkoutFileParser(context);
 
             if(wfp.getVersion().compareTo(Profile.getInstance(context).getDataVersion()) <= 0) {
+                Log.i(MySettings.LOG_TAG, "Version is not updated, not reload workout");
                 return;
             }
 
+            Log.i(MySettings.LOG_TAG, "Version is updated, begin reloading workout");
             db = this.getWritableDatabase();
             clearData(db);
 
@@ -102,6 +149,9 @@ public class MyDB extends SQLiteOpenHelper {
                     dayWorkoutHandler.createDayWorkout(db, (DayWorkout)obj);
                 }
             }
+
+            Profile.getInstance(context).setDataVersion(wfp.getVersion());
+            Profile.getInstance(context).save(context);
         } catch (Exception e) {
             Log.d(MySettings.LOG_TAG, "reload workouts", e);
         } finally {

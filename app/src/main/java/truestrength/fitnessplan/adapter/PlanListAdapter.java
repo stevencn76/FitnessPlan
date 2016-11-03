@@ -27,9 +27,9 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
     }
 
     private void load() {
-        this.add(new Plan(1, DateUtil.toDate("03/10/2016"), DateUtil.toDate("23/10/2016"), 100));
-        this.add(new Plan(2, DateUtil.toDate("24/10/2016"), DateUtil.toDate("13/11/2016"), 40));
-        this.add(new Plan(3, DateUtil.toDate("14/11/2016"), DateUtil.toDate("04/12/2016"), 0));
+        this.add(new Plan(1, "03/10/2016", "23/10/2016", 100));
+        this.add(new Plan(2, "24/10/2016", "13/11/2016", 40));
+        this.add(new Plan(3, "14/11/2016", "04/12/2016", 0));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
             TextView tt2 = (TextView) v.findViewById(R.id.progressTextView);
 
             if (tt1 != null) {
-                String title = MessageFormat.format("{0} [ {1} Weeks ]", DateUtil.toDateString(p.getStartDate()), p.getWeekCount());
+                String title = MessageFormat.format("{0} [ {1} Weeks ]", p.getStartDate(), p.getWeekCount());
                 tt1.setText(title);
             }
 
@@ -59,7 +59,7 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
             }
 
             Date today = new Date();
-
+/*
             if(today.after(p.getEndDate())) {
                 tt1.setTextColor(Color.LTGRAY);
                 tt1.setTextColor(Color.LTGRAY);
@@ -67,9 +67,9 @@ public class PlanListAdapter extends ArrayAdapter<Plan> {
                 tt1.setTextColor(Color.BLACK);
                 tt1.setTextColor(Color.BLACK);
             } else {
+*/                tt1.setTextColor(Color.BLUE);
                 tt1.setTextColor(Color.BLUE);
-                tt1.setTextColor(Color.BLUE);
-            }
+//            }
         }
 
         return v;

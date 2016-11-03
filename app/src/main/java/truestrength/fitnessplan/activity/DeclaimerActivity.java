@@ -1,5 +1,6 @@
 package truestrength.fitnessplan.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,7 +37,8 @@ public class DeclaimerActivity extends AppCompatActivity {
 
         finish();
 
-        ActivitySwitcher.getInstance().goPlanList(this);
+        Intent i = new Intent(this, PlanListActivity.class);
+        startActivity(i);
     }
 
     public void onDisagreeBtnClicked(View view) {

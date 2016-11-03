@@ -3,7 +3,6 @@ package truestrength.fitnessplan.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.PopupMenu;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.adapter.PlanListAdapter;
-import truestrength.fitnessplan.db.DatabaseHandler;
+import truestrength.fitnessplan.service.DataService;
 import truestrength.fitnessplan.entity.Plan;
 
 public class PlanListActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -64,7 +63,7 @@ public class PlanListActivity extends AppCompatActivity implements PopupMenu.OnM
     protected void onStart() {
         super.onStart();
 
-        if(!hasShownCreatePlan && DatabaseHandler.getInstance().getPlanCount() == 0) {
+        if(!hasShownCreatePlan && DataService.getInstance(this).getPlanCount() == 0) {
             hasShownCreatePlan = true;
             Intent i = new Intent(this, CreatePlanActivity.class);
             startActivity(i);
