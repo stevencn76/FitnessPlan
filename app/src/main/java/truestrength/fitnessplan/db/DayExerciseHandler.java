@@ -144,6 +144,39 @@ public class DayExerciseHandler {
         return dayList;
     }
 
+    public void updateDayExercise(DayExercise dayExercise) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        updateDayExercise(db, dayExercise);
+        db.close();
+    }
+
+    public void updateDayExercise(SQLiteDatabase db, DayExercise dayExercise) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, dayExercise.getId());
+        values.put(KEY_DAYID, dayExercise.getDayId());
+        values.put(KEY_EXERCISEID, dayExercise.getExerciseId());
+        values.put(KEY_DONE, dayExercise.isDone()?1:0);
+
+        db.update(TABLE_NAME, values, KEY_ID+"=?", new String[]{String.valueOf(dayExercise.getId())});
+    }
+
+    public int getProgressByDay(int dayId) {
+        String selectQuery = "SELECT  sum(" + KEY_DONE + ")*1.0/count(" + KEY_DONE + ") FROM "
+                + TABLE_NAME + " WHERE " + KEY_DAYID + "=" + dayId;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int res = 0;
+        if (cursor.moveToFirst()) {
+            res = (int)Math.ceil(cursor.getDouble(0) * 100);
+        }
+
+        db.close();
+
+        return res;
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

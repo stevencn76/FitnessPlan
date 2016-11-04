@@ -160,15 +160,29 @@ public class DataService {
         return getDb().getActionHandler().getAction(actionId);
     }
 
-    public int getPlanCount() {
-        return 0;
+    public void setDayExerciseDone(int dayExerciseId, boolean isDone) {
+        DayExercise de = getDb().getDayExerciseHandler().getDayExercise(dayExerciseId);
+
+        if(de.isDone() == isDone)
+            return;
+
+        de.setDone(isDone);
+        getDb().getDayExerciseHandler().updateDayExercise(de);
+
+        Day day = getDb().getDayHandler().getDay(de.getDayId());
+        day.setProgress(getDb().getDayExerciseHandler().getProgressByDay(day.getId()));
+        getDb().getDayHandler().updateDay(day);
+
+        Week week = getDb().getWeekHandler().getWeek(day.getWeekId());
+        week.setProgress(getDb().getDayHandler().getProgressByWeek(week.getId()));
+        getDb().getWeekHandler().updateWeek(week);
+
+        Plan plan = getDb().getPlanHandler().getPlan(week.getPlanId());
+        plan.setProgress(getDb().getWeekHandler().getProgressByPlan(plan.getId()));
+        getDb().getPlanHandler().updatePlan(plan);
     }
 
-    public boolean isCurPlanAvailable() {
-        return false;
-    }
-
-    public boolean hasNextPlan() {
-        return false;
+    public List<Day> getDaysByPlan(int planId) {
+        return getDb().getDayHandler().getDaysByPlan(planId);
     }
 }

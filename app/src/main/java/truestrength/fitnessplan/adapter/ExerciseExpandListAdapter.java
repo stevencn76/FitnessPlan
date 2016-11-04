@@ -30,6 +30,20 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
     private Hashtable<String, Group> groupNameTable = new Hashtable<>();
     private Day day;
 
+    private class DoneCheckBoxListener implements View.OnClickListener {
+        public int dayExerciseId;
+        public int groupPos;
+        public int childPos;
+        @Override
+        public void onClick(View view) {
+            CheckBox box = (CheckBox)view;
+            DataService.getInstance(context).setDayExerciseDone(dayExerciseId, box.isChecked());
+
+            DayExercise de = (DayExercise)getChild(groupPos, childPos);
+            de.setDone(box.isChecked());
+        }
+    }
+
     public ExerciseExpandListAdapter(Context context, Day day) {
         this.context = context;
         this.day = day;
@@ -113,14 +127,14 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int i, int i1, boolean b, View view, ViewGroup viewGroup) {
+    public View getChildView(int groupPos, int childPos, boolean b, View view, ViewGroup viewGroup) {
         if(view == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(context);
             view = vi.inflate(R.layout.exercise_item, null);
         }
 
-        DayExercise e = (DayExercise)getChild(i, i1);
+        DayExercise e = (DayExercise)getChild(groupPos, childPos);
         if(e != null) {
             TextView titleView = (TextView)view.findViewById(R.id.titleTextView);
             if(titleView != null) {
@@ -130,6 +144,11 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
             }
 
             CheckBox doneCheckBox = (CheckBox)view.findViewById(R.id.doneCheckBox);
+            DoneCheckBoxListener doneCheckBoxListener = new DoneCheckBoxListener();
+            doneCheckBoxListener.dayExerciseId = e.getId();
+            doneCheckBoxListener.groupPos = groupPos;
+            doneCheckBoxListener.childPos = childPos;
+            doneCheckBox.setOnClickListener(doneCheckBoxListener);
             if(doneCheckBox != null) {
                 doneCheckBox.setChecked(e.isDone());
             }

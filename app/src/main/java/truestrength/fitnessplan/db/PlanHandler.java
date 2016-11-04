@@ -161,6 +161,25 @@ public class PlanHandler {
         db.close();
     }
 
+    public void updatePlan(Plan plan) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        updatePlan(db, plan);
+
+        db.close();
+    }
+
+    public void updatePlan(SQLiteDatabase db, Plan p) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, p.getId());
+        values.put(KEY_STARTDATE, p.getSqlStartDate());
+        values.put(KEY_ENDDATE, p.getSqlEndDate());
+        values.put(KEY_WEEKCOUNT, p.getWeekCount());
+        values.put(KEY_PROGRESS, p.getProgress());
+
+        db.update(TABLE_NAME, values, KEY_ID + "=?", new String[]{String.valueOf(p.getId())});
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

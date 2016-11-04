@@ -118,6 +118,10 @@ public class PlanListActivity extends AppCompatActivity implements PopupMenu.OnM
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent i = null;
         switch (item.getItemId()) {
+            case R.id.summaryMenuItem:
+                i = new Intent(this, PlansSummaryActivity.class);
+                startActivity(i);
+                return true;
             case R.id.helpMenuItem:
                 i = new Intent(this, HelpActivity.class);
                 startActivity(i);

@@ -10,10 +10,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="truestrength.fitnessplan.activity.DeclaimerActivity">
 
+    <TextView
+        android:text="Declaimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/declaimertextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="normal|bold"
+        android:textAlignment="center" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/declaimertextView"
         android:layout_centerHorizontal="true"
         android:layout_above="@+id/agreeCheckBox">
 
@@ -23,19 +32,27 @@
             android:orientation="vertical" >
 
             <TextView
-                android:text="Declaimer"
+                android:text="@string/declaimer_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textStyle="normal|bold"
-                android:textAlignment="center" />
+                android:id="@+id/textView2"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="normal|bold" />
 
             <TextView
-                android:text="@string/declaimer"
+                android:text="@string/declaimer_version"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView2" />
+                android:id="@+id/textView3"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:text="@string/declaimer_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4" />
+
         </LinearLayout>
     </ScrollView>
 

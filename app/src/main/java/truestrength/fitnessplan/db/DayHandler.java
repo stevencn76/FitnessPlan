@@ -149,6 +149,73 @@ public class DayHandler {
         return dayList;
     }
 
+    public List<Day> getDaysByPlan(int planId) {
+        List<Day> dayList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT td." + KEY_ID + ", td." + KEY_WEEKID + ", td." + KEY_DATE
+                + ", td." + KEY_DAYWORKOUTID + ", td." + KEY_PROGRESS
+                + " FROM " + TABLE_NAME + " td," + WeekHandler.TABLE_NAME
+                + " tw WHERE td." + KEY_WEEKID + "=tw." + WeekHandler.KEY_ID
+                + " AND tw." + WeekHandler.KEY_PLANID + "=" + planId
+                + " ORDER BY " + KEY_ID + " ASC";
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Day d = new Day();
+                d.setId(cursor.getInt(0));
+                d.setWeekId(cursor.getInt(1));
+                d.setSqlDate(cursor.getString(2));
+                d.setDayWorkoutId(cursor.getInt(3));
+                d.setProgress(cursor.getInt(4));
+                // Adding to list
+                dayList.add(d);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        // return list
+        return dayList;
+    }
+
+    public void updateDay(Day day) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        updateDay(db, day);
+        db.close();
+    }
+
+    public void updateDay(SQLiteDatabase db, Day day) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, day.getId());
+        values.put(KEY_WEEKID, day.getWeekId());
+        values.put(KEY_DATE, day.getSqlDate());
+        values.put(KEY_DAYWORKOUTID, day.getDayWorkoutId());
+        values.put(KEY_PROGRESS, day.getProgress());
+
+        db.update(TABLE_NAME, values, KEY_ID+"=?", new String[]{String.valueOf(day.getId())});
+    }
+
+    public int getProgressByWeek(int weekId) {
+        String selectQuery = "SELECT  sum(" + KEY_PROGRESS + ")*1.0/(count(" + KEY_PROGRESS + ")*100) FROM "
+                + TABLE_NAME + " WHERE " + KEY_WEEKID + "=" + weekId;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int res = 0;
+        if (cursor.moveToFirst()) {
+            res = (int)Math.ceil(cursor.getDouble(0) * 100);
+        }
+
+        db.close();
+
+        return res;
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

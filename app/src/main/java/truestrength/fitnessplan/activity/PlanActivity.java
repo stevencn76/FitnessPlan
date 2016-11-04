@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import truestrength.fitnessplan.R;
@@ -87,7 +86,8 @@ public class PlanActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.summaryMenuItem:
-                i = new Intent(this, SummaryActivity.class);
+                i = new Intent(this, DaysSummaryActivity.class);
+                i.putExtra("plan", plan);
                 startActivity(i);
                 return true;
             case R.id.helpMenuItem:

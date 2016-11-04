@@ -143,6 +143,41 @@ public class WeekHandler {
         return weekList;
     }
 
+    public void updateWeek(Week w) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        updateWeek(db, w);
+
+        db.close();
+    }
+
+    public void updateWeek(SQLiteDatabase db, Week w) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, w.getId());
+        values.put(KEY_PLANID, w.getPlanId());
+        values.put(KEY_NUMBER, w.getNumber());
+        values.put(KEY_PROGRESS, w.getProgress());
+
+        db.update(TABLE_NAME, values, KEY_ID + "=?", new String[]{String.valueOf(w.getId())});
+    }
+
+    public int getProgressByPlan(int planId) {
+        String selectQuery = "SELECT  sum(" + KEY_PROGRESS + ")*1.0/(count(" + KEY_PROGRESS + ")*100) FROM "
+                + TABLE_NAME + " WHERE " + KEY_PLANID + "=" + planId;
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        int res = 0;
+        if (cursor.moveToFirst()) {
+            res = (int)Math.ceil(cursor.getDouble(0) * 100);
+        }
+
+        db.close();
+
+        return res;
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

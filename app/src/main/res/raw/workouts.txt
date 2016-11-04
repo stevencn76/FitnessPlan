@@ -69,7 +69,7 @@ Version: 1
 // WORKOUT_ID|INDEX|  GROUPNAME  |ACTION_ID|  SETS    |  REPS  |  LOAD  |  TEMPO  |  REST  | COMMENTS
     1        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
     1        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
-    1        | 1c  | Warm Up     | 3       | 2-3 sets | 12-15  |        |         |        |
+    1        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
     1        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
     1        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
     1        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
@@ -79,7 +79,21 @@ Version: 1
     1        | 6a  | Strength    | 10      | x3       | 12-15  |        |         |        |
     1        | 6b  | Strength    | 11      | x3       | 8-10   |        |         | 30sec  |
     1        | 7a  | Strength    | 12      | x3       | 12-15  |        |         |        |
-    1        | 7b  | Strength    | 13      | x3       | 8-10   |        |         | 30sec  |
+    1        | 7b  | Strength    | 3      | x3       | 8-10   |        |         | 30sec  |
+
+    2        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    2        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    2        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    2        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    2        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    2        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    2        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    2        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    2        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+    2        | 6a  | Strength    | 10      | x3       | 12-15  |        |         |        |
+    2        | 6b  | Strength    | 11      | x3       | 8-10   |        |         | 30sec  |
+    2        | 7a  | Strength    | 12      | x3       | 12-15  |        |         |        |
+    2        | 7b  | Strength    | 3      | x3       | 8-10   |        |         | 30sec  |
 
 //DayWorkouts Definition
 --DayWorkouts

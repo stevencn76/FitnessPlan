@@ -58,7 +58,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/foam_roll"
+                app:srcCompat="@mipmap/logo_fullsize"
                 android:id="@+id/imageView"
                 android:layout_margin="5dip" />
 

@@ -24,7 +24,8 @@
         <activity android:name=".activity.ExerciseActivity" />
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.HelpActivity" />
-        <activity android:name=".activity.SummaryActivity"></activity>
+        <activity android:name=".activity.DaysSummaryActivity" />
+        <activity android:name=".activity.PlansSummaryActivity"></activity>
     </application>
 
 </manifest>
