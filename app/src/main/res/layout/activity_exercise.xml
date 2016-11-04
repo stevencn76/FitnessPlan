@@ -12,6 +12,15 @@
     android:orientation="vertical"
     tools:context="truestrength.fitnessplan.activity.ExerciseActivity">
 
+    <TextView
+        android:text="Warm Up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/groupTextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="normal|bold"
+        android:layout_weight="0" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -20,29 +29,21 @@
         android:layout_margin="5dip">
 
         <TextView
-            android:text="Warm Up"
-            android:layout_width="match_parent"
+            android:text="Foam Roll"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/groupTextView"
+            android:id="@+id/nameTextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textStyle="normal|bold"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_margin="5dip" />
 
         <CheckBox
-            android:layout_width="40dip"
             android:layout_height="wrap_content"
             android:id="@+id/doneCheckBox"
-            android:layout_weight="0" />
+            android:layout_weight="0"
+            android:text="Done"
+            android:layout_width="80dip" />
     </LinearLayout>
-
-    <TextView
-        android:text="Foam Roll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nameTextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:layout_weight="0"
-        android:layout_margin="5dip" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -58,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@mipmap/foam_roll"
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView"
                 android:layout_margin="5dip" />
 
             <LinearLayout
@@ -70,39 +71,123 @@
                     android:text="Sets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView4"
-                    android:layout_weight="2"
+                    android:id="@+id/setsLabelTextView"
+                    android:layout_weight="1"
                     android:layout_margin="5dip" />
 
                 <TextView
-                    android:text="10Mins"
+                    android:text=""
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView3"
+                    android:id="@+id/setsTextView"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Reps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/repsLabelTextView"
+                    android:layout_weight="1"
+                    android:layout_margin="5dip" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/repsTextView"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Load"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loadLabelTextView"
+                    android:layout_weight="1"
+                    android:layout_margin="5dip" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loadTextView"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Tempo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tempoLabelTextView"
+                    android:layout_weight="1"
+                    android:layout_margin="5dip" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tempoTextView"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Rest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/restLabelTextView"
+                    android:layout_weight="1"
+                    android:layout_margin="5dip" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/restTextView"
+                    android:layout_weight="2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="Comments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commentsLabelTextView"
+                    android:layout_weight="0"
+                    android:layout_margin="5dip" />
+
+                <TextView
+                    android:text=""
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/commentsTextView"
                     android:layout_weight="1" />
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0">
-
-        <Button
-            android:text="Previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/prevBtn"
-            android:layout_weight="1" />
-
-        <Button
-            android:text="Next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nextBtn"
-            android:layout_weight="1" />
-    </LinearLayout>
 </LinearLayout>

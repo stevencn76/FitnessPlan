@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import truestrength.fitnessplan.db.MyDB;
+import truestrength.fitnessplan.entity.Action;
 import truestrength.fitnessplan.entity.Day;
 import truestrength.fitnessplan.entity.DayExercise;
 import truestrength.fitnessplan.entity.DayWorkout;
@@ -145,6 +146,18 @@ public class DataService {
 
     public List<Day> getDays(int weekId) {
         return getDb().getDayHandler().getDays(weekId);
+    }
+
+    public List<DayExercise> getDayExercises(int dayId) {
+        return getDb().getDayExerciseHandler().getDayExercises(dayId);
+    }
+
+    public Exercise getExercise(int exerciseId) {
+        return getDb().getExerciseHandler().getExercise(exerciseId);
+    }
+
+    public Action getAction(int actionId) {
+        return getDb().getActionHandler().getAction(actionId);
     }
 
     public int getPlanCount() {

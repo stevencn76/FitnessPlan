@@ -9,10 +9,16 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 
 import truestrength.fitnessplan.R;
+import truestrength.fitnessplan.entity.Action;
+import truestrength.fitnessplan.entity.Day;
 import truestrength.fitnessplan.entity.DayExercise;
 import truestrength.fitnessplan.dto.Group;
+import truestrength.fitnessplan.entity.Exercise;
+import truestrength.fitnessplan.service.DataService;
 
 /**
  * Created by steven on 31/10/16.
@@ -21,22 +27,35 @@ import truestrength.fitnessplan.dto.Group;
 public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private ArrayList<Group> groupList = new ArrayList<>();
+    private Hashtable<String, Group> groupNameTable = new Hashtable<>();
+    private Day day;
 
-    public ExerciseExpandListAdapter(Context context) {
+    public ExerciseExpandListAdapter(Context context, Day day) {
         this.context = context;
+        this.day = day;
+    }
 
-        Group g;
-        g = new Group("Warm up:");
-        groupList.add(g);
-        g.getExercises().add(new DayExercise(1, 1, 1, true));
-        g.getExercises().add(new DayExercise(2, 1, 2, true));
-        g.getExercises().add(new DayExercise(3, 1, 3, true));
+    public void reload() {
+        groupList.clear();
+        groupNameTable.clear();
 
-        g = new Group("Strength:");
-        groupList.add(g);
-        g.getExercises().add(new DayExercise(4, 2, 4, true));
-        g.getExercises().add(new DayExercise(5, 2, 4, true));
+        List<DayExercise> dayExerciseList = DataService.getInstance(context).getDayExercises(day.getId());
 
+        for(DayExercise tde : dayExerciseList) {
+            int eid = tde.getExerciseId();
+            Exercise te = DataService.getInstance(context).getExercise(eid);
+            Group tg = groupNameTable.get(te.getGroupName());
+            if(tg == null) {
+                tg = new Group();
+                tg.setName(te.getGroupName());
+                groupNameTable.put(te.getGroupName(), tg);
+                groupList.add(tg);
+            }
+
+            tg.getExercises().add(tde);
+        }
+
+        this.notifyDataSetChanged();
     }
 
     @Override
@@ -105,7 +124,9 @@ public class ExerciseExpandListAdapter extends BaseExpandableListAdapter {
         if(e != null) {
             TextView titleView = (TextView)view.findViewById(R.id.titleTextView);
             if(titleView != null) {
-                titleView.setText(e.toString());
+                Exercise te = DataService.getInstance(context).getExercise(e.getExerciseId());
+                Action ta = DataService.getInstance(context).getAction(te.getActionId());
+                titleView.setText(ta.getName());
             }
 
             CheckBox doneCheckBox = (CheckBox)view.findViewById(R.id.doneCheckBox);

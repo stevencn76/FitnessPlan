@@ -115,6 +115,35 @@ public class DayExerciseHandler {
         return dayList;
     }
 
+    public List<DayExercise> getDayExercises(int dayId) {
+        List<DayExercise> dayList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME
+                + " WHERE " + KEY_DAYID + "=" + dayId
+                + " ORDER BY " + KEY_ID + " ASC";
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                DayExercise de = new DayExercise();
+                de.setId(cursor.getInt(0));
+                de.setDayId(cursor.getInt(1));
+                de.setExerciseId(cursor.getInt(2));
+                de.setDone(cursor.getInt(3) > 0);
+                // Adding to list
+                dayList.add(de);
+            } while (cursor.moveToNext());
+        }
+
+        db.close();
+
+        // return list
+        return dayList;
+    }
+
     public void deleteAll() {
         SQLiteDatabase db = helper.getWritableDatabase();
 

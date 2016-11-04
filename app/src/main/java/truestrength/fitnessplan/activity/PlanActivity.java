@@ -11,6 +11,7 @@ import android.widget.ExpandableListView;
 
 import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.adapter.DetailExpandListAdapter;
+import truestrength.fitnessplan.entity.Day;
 import truestrength.fitnessplan.entity.Plan;
 
 public class PlanActivity extends AppCompatActivity {
@@ -34,7 +35,9 @@ public class PlanActivity extends AppCompatActivity {
         detailListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPos, int childPos, long l) {
+                Day day = (Day)detailListAdapter.getChild(groupPos, childPos);
                 Intent i = new Intent(PlanActivity.this, ExerciseListActivity.class);
+                i.putExtra("day", day);
                 startActivity(i);
 
                 return true;

@@ -5,16 +5,31 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import truestrength.fitnessplan.R;
+import truestrength.fitnessplan.entity.Action;
+import truestrength.fitnessplan.entity.DayExercise;
+import truestrength.fitnessplan.entity.Exercise;
+import truestrength.fitnessplan.service.DataService;
 
 public class ExerciseActivity extends AppCompatActivity {
+    private DayExercise dayExercise;
+    private Exercise exercise;
+    private Action action;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
+        dayExercise = (DayExercise)getIntent().getSerializableExtra("dayexercise");
+        load();
+
         setTitle(R.string.title_exercise);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void load() {
+        exercise = DataService.getInstance(this).getExercise(dayExercise.getExerciseId());
+        action = DataService.getInstance(this).getAction(exercise.getActionId());
     }
 
     @Override
