@@ -1,6 +1,7 @@
 package truestrength.fitnessplan.service;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,6 +9,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
+import truestrength.fitnessplan.common.MySettings;
 import truestrength.fitnessplan.db.MyDB;
 import truestrength.fitnessplan.entity.Action;
 import truestrength.fitnessplan.entity.Day;
@@ -27,6 +29,7 @@ public class DataService {
 
     private Context context;
     private MyDB db;
+    private Hashtable<Integer, List<Exercise>> workoutExerciseCacheTable;
 
     private DataService() {
 
@@ -53,7 +56,28 @@ public class DataService {
         getDb().reloadWorkouts();
     }
 
+    private Hashtable<Integer, List<Exercise>> getWorkoutExerciseCacheTable() {
+        if(workoutExerciseCacheTable == null) {
+            workoutExerciseCacheTable = new Hashtable<>();
+
+            List<Exercise> exerciseList = getDb().getExerciseHandler().getAllExercises();
+
+            for(Exercise te : exerciseList) {
+                List<Exercise> exlist = workoutExerciseCacheTable.get(te.getWorkoutId());
+                if(exlist == null) {
+                    exlist = new ArrayList<Exercise>();
+                    workoutExerciseCacheTable.put(te.getWorkoutId(), exlist);
+                }
+                exlist.add(te);
+            }
+        }
+
+        return workoutExerciseCacheTable;
+    }
+
     public void createPlan(Date startDate) throws Exception {
+        long t1 = System.currentTimeMillis();
+
         int weekCount = getDb().getDayWorkoutHandler().getWeekCount();
 
         if(weekCount <= 0)
@@ -63,9 +87,12 @@ public class DataService {
         Plan plan = generateNewPlan(startDate, weekCount);
 
         generateNewWeeks(startDate, plan);
+
+        long t2 = System.currentTimeMillis();
+        Log.i(MySettings.LOG_TAG, "Creating a plan cost: " + (t2-t1));
     }
 
-    private Plan generateNewPlan(Date startDate, int weekCount) {
+    private Plan generateNewPlan(Date startDate, int weekCount) throws Exception {
         //Create plan
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
@@ -76,6 +103,10 @@ public class DataService {
         plan.setProgress(0);
         plan.setWeekCount(weekCount);
         plan.setEndDate(DateUtil.toDateString(c.getTime()));
+
+        if(getDb().getPlanHandler().hasPlanOnDate(plan.getSqlStartDate(), plan.getSqlEndDate())) {
+           throw new Exception("Intercrossing plan already exists");
+        }
 
         getDb().getPlanHandler().createPlan(plan);
 
@@ -121,7 +152,11 @@ public class DataService {
     }
 
     private void generateNewDayExercises(Day day) {
-        List<Exercise> exerciseList = getDb().getExerciseHandler().getExercises(day.getDayWorkoutId());
+//        List<Exercise> exerciseList = getDb().getExerciseHandler().getExercises(day.getDayWorkoutId());
+        List<Exercise> exerciseList = getWorkoutExerciseCacheTable().get(day.getDayWorkoutId());
+        if(exerciseList == null)
+            return;
+
         for(Exercise te : exerciseList) {
             DayExercise tde = new DayExercise();
             tde.setExerciseId(te.getId());

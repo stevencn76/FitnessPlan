@@ -12,6 +12,7 @@ import java.util.List;
 import truestrength.fitnessplan.entity.Action;
 import truestrength.fitnessplan.entity.DayExercise;
 import truestrength.fitnessplan.entity.Plan;
+import truestrength.fitnessplan.util.DateUtil;
 
 /**
  * Created by steven on 1/11/16.
@@ -57,6 +58,8 @@ public class PlanHandler {
             newId = cursor.getInt(0) + 1;
         }
 
+        cursor.close();
+
         return newId;
     }
 
@@ -71,6 +74,27 @@ public class PlanHandler {
         values.put(KEY_PROGRESS, p.getProgress());
 
         db.insert(TABLE_NAME, null, values);
+    }
+
+    public boolean hasPlanOnDate(String sqlStartDate, String sqlEndDate) {
+        String selectQuery = "SELECT  * FROM " + TABLE_NAME + " WHERE ("
+                + KEY_STARTDATE + "<'" + sqlEndDate + "' OR " + KEY_STARTDATE + "='" + sqlEndDate + "') AND ("
+                + KEY_ENDDATE + ">'" + sqlStartDate + "' OR " + KEY_ENDDATE + "='" + sqlStartDate + "')";
+
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        boolean res = false;
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            res = true;
+        }
+
+        cursor.close();
+
+        db.close();
+
+        return res;
     }
 
     public Plan getPlan(int id) {
@@ -88,6 +112,8 @@ public class PlanHandler {
         p.setSqlEndDate(cursor.getString(2));
         p.setWeekCount(cursor.getInt(3));
         p.setProgress(cursor.getInt(4));
+
+        cursor.close();
 
         db.close();
 
@@ -115,6 +141,8 @@ public class PlanHandler {
                 planList.add(p);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
 
         db.close();
 

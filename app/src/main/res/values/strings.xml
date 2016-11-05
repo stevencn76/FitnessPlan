@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Fitness Plan</string>
     <string name="app_version">Version: 1.0</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="confirming">CONFIRMING</string>
+    <string name="cancel">Cancel</string>
     <string name="about_us">True Strength is dedicated to all things health and fitness, it\'s a platform where we all can learn and grow together.</string>
     <string name="contact_name">Contact: Mike</string>
     <string name="contact_email">Email: michael.truestrength@outlook.com</string>
@@ -10,7 +13,6 @@
     <string name="title_create_plan">Create New Plan</string>
     <string name="title_exercise">Exercise Details</string>
     <string name="title_exercise_list">Day Exercises</string>
-    <string name="declaimer">1. ... \n 2. ... \n 3. ...</string>
     <string name="declaimer_date">DATE: 30/05/2016</string>
     <string name="declaimer_version">VERSION: V1</string>
     <string name="declaimer_content">Before beginning any exercise or nutrition programme, consult your healthcare professional or physician to avoid the potential harm of doing any inappropriate exercises or nutrition which may affect your health.  If you think you may be suffering from any medical condition, you should seek immediate medical attention.  This is particularly true if any of the following apply to your current health status:\n

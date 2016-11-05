@@ -12,7 +12,7 @@ import truestrength.fitnessplan.entity.Day;
 import truestrength.fitnessplan.entity.Week;
 
 /**
- * Created by steven on 1/11/16.
+ * Created by Baofeng Chen on 1/11/16.
  */
 
 public class DayHandler {
@@ -54,6 +54,7 @@ public class DayHandler {
         if (cursor != null && cursor.moveToFirst()) {
             newId = cursor.getInt(0) + 1;
         }
+        cursor.close();
 
         return newId;
     }
@@ -87,6 +88,8 @@ public class DayHandler {
         d.setDayWorkoutId(cursor.getInt(3));
         d.setProgress(cursor.getInt(4));
 
+        cursor.close();
+
         db.close();
 
         return d;
@@ -113,6 +116,8 @@ public class DayHandler {
                 dayList.add(d);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
 
         db.close();
 
@@ -142,6 +147,8 @@ public class DayHandler {
                 dayList.add(d);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
 
         db.close();
 
@@ -176,6 +183,8 @@ public class DayHandler {
             } while (cursor.moveToNext());
         }
 
+        cursor.close();
+
         db.close();
 
         // return list
@@ -201,7 +210,8 @@ public class DayHandler {
 
     public int getProgressByWeek(int weekId) {
         String selectQuery = "SELECT  sum(" + KEY_PROGRESS + ")*1.0/(count(" + KEY_PROGRESS + ")*100) FROM "
-                + TABLE_NAME + " WHERE " + KEY_WEEKID + "=" + weekId;
+                + TABLE_NAME + " WHERE " + KEY_WEEKID + "=" + weekId
+                + " AND " + KEY_DAYWORKOUTID + "<>0";
 
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -210,6 +220,8 @@ public class DayHandler {
         if (cursor.moveToFirst()) {
             res = (int)Math.ceil(cursor.getDouble(0) * 100);
         }
+
+        cursor.close();
 
         db.close();
 

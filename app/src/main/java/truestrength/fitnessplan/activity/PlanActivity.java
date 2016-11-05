@@ -35,9 +35,11 @@ public class PlanActivity extends AppCompatActivity {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPos, int childPos, long l) {
                 Day day = (Day)detailListAdapter.getChild(groupPos, childPos);
-                Intent i = new Intent(PlanActivity.this, ExerciseListActivity.class);
-                i.putExtra("day", day);
-                startActivity(i);
+                if(day.getDayWorkoutId() != 0) {
+                    Intent i = new Intent(PlanActivity.this, ExerciseListActivity.class);
+                    i.putExtra("day", day);
+                    startActivity(i);
+                }
 
                 return true;
             }
@@ -79,7 +81,7 @@ public class PlanActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i = null;
+        Intent i;
         switch (item.getItemId()) {
             case android.R.id.home:
                 // API 5+ solution

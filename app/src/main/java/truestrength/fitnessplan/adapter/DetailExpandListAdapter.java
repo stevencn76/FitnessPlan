@@ -145,7 +145,11 @@ public class DetailExpandListAdapter extends BaseExpandableListAdapter {
 
             TextView progressTextView = (TextView)view.findViewById(R.id.progressTextView);
             if(progressTextView != null) {
-                progressTextView.setText(day.getProgress() + "%");
+                if(day.getDayWorkoutId() != 0) {
+                    progressTextView.setText(day.getProgress() + "%");
+                } else {
+                    progressTextView.setText("REST");
+                }
             }
 
             int c = day.getSqlDate().compareTo(today);

@@ -95,6 +95,76 @@ Version: 1
     2        | 7a  | Strength    | 12      | x3       | 12-15  |        |         |        |
     2        | 7b  | Strength    | 3      | x3       | 8-10   |        |         | 30sec  |
 
+    3        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    3        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    3        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    3        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    3        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    3        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    3        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    3        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    3        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    4        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    4        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    4        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    4        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    4        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    4        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    4        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    4        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    4        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    5        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    5        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    5        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    5        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    5        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    5        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    5        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    5        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    5        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    6        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    6        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    6        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    6        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    6        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    6        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    6        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    6        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    6        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    7        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    7        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    7        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    7        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    7        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    7        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    7        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    7        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    7        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    8        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    8        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    8        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    8        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    8        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    8        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    8        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    8        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    8        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
+    9        | 1a  | Warm Up     | 1       | 10mins   |        |        |         |        |
+    9        | 1b  | Warm Up     | 2       | 5mins    |        |        |         |        |
+    9        | 1c  | Warm Up     | 13       | 2-3 sets | 12-15  |        |         |        |
+    9        | 2   | Strength    | 4       | x4       | 3-5    |        |         | 2mins  | Pause Rep
+    9        | 3   | Strength    | 5       | x4       | 5-8    |        |         | 2mins  |
+    9        | 4a  | Strength    | 6       | x3       | 8-10   |        |         |        |
+    9        | 4b  | Strength    | 7       | x3       | 12-15  |        |         | 1min   |
+    9        | 5a  | Strength    | 8       | x3       | 8-10   |        |         |        |
+    9        | 5b  | Strength    | 9       | x3       | 12-15  |        |         | 1min   |
+
 //DayWorkouts Definition
 --DayWorkouts
 // WEEK|DAY|WORKOUT_ID

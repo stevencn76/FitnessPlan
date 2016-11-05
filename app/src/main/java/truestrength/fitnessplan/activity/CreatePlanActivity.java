@@ -21,6 +21,7 @@ import truestrength.fitnessplan.service.DataService;
 public class CreatePlanActivity extends AppCompatActivity {
     private DatePicker planDatePicker;
     private Button okBtn;
+    private Button cancelBtn;
     private Calendar calendar;
     private Date selectDate;
 
@@ -50,10 +51,21 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
 
         okBtn = (Button)findViewById(R.id.okBtn);
+        cancelBtn = (Button)findViewById(R.id.cancelBtn);
 
         setTitle(R.string.title_create_plan);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
+        okBtn.setEnabled(true);
+        okBtn.setText(R.string.confirm);
+        cancelBtn.setEnabled(true);
     }
 
     @Override
@@ -75,13 +87,37 @@ public class CreatePlanActivity extends AppCompatActivity {
     }
 
     public void onOkBtnClicked(View view) {
-        try {
-            DataService.getInstance(this).createPlan(selectDate);
-            onBackPressed();
-        } catch (Exception e) {
-            Log.d(MySettings.LOG_TAG, "create plan", e);
-            Toast.makeText(this, "Create Plan Failed", Toast.LENGTH_LONG).show();
-        }
+        okBtn.setEnabled(false);
+        cancelBtn.setEnabled(false);
+        okBtn.setText(R.string.confirming);
+
+        //Toast.makeText(this, "Creating a new plan, 2 seconds", Toast.LENGTH_LONG).show();
+
+        new Thread() {
+            public void run() {
+                try {
+                    DataService.getInstance(CreatePlanActivity.this).createPlan(selectDate);
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            onBackPressed();
+                        }
+                    });
+                } catch (Exception e) {
+                    Log.d(MySettings.LOG_TAG, "create plan", e);
+
+                    final String msg = e.getMessage();
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            okBtn.setEnabled(true);
+                            okBtn.setText(R.string.confirm);
+                            cancelBtn.setEnabled(true);
+                            Toast.makeText(CreatePlanActivity.this, msg, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        }.start();
     }
 
     public void onCancelBtnClicked(View view) {
