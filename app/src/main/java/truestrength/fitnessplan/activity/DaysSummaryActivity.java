@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import lecho.lib.hellocharts.gesture.ZoomType;
 import lecho.lib.hellocharts.listener.ViewportChangeListener;
 import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
 import lecho.lib.hellocharts.model.Column;
 import lecho.lib.hellocharts.model.ColumnChartData;
 import lecho.lib.hellocharts.model.SubcolumnValue;
@@ -21,6 +23,7 @@ import truestrength.fitnessplan.R;
 import truestrength.fitnessplan.entity.Day;
 import truestrength.fitnessplan.entity.Plan;
 import truestrength.fitnessplan.service.DataService;
+import truestrength.fitnessplan.util.DateUtil;
 
 public class DaysSummaryActivity extends AppCompatActivity {
     private ColumnChartView chartView;
@@ -63,13 +66,44 @@ public class DaysSummaryActivity extends AppCompatActivity {
 
         for(Day td : dayList) {
             values = new ArrayList<SubcolumnValue>();
-            values.add(new SubcolumnValue(td.getProgress(), ChartUtils.pickColor()));
-            columns.add(new Column(values));
+            SubcolumnValue tsc = new SubcolumnValue(td.getProgress(), ChartUtils.pickColor());
+            tsc.setLabel(DateUtil.getDay(td.getSqlDate()));
+            values.add(tsc);
+            Column tc = new Column(values);
+            tc.setHasLabels(true);
+            columns.add(tc);
         }
 
         data = new ColumnChartData(columns);
-        data.setAxisXBottom(new Axis());
-        data.setAxisYLeft(new Axis().setHasLines(true));
+        Axis axisX = new Axis();
+        axisX.setName("Day");
+        List<AxisValue> axisValuesX = new LinkedList<>();
+        axisX.setValues(axisValuesX);
+        data.setAxisXBottom(axisX);
+        axisX.setHasTiltedLabels(true);
+
+
+        Axis axisY = new Axis();
+        axisY.setHasLines(true);
+//        axisY.setName("Percentage");
+        List<AxisValue> axisValuesY = new LinkedList<>();
+        AxisValue av0 = new AxisValue(0f);
+        av0.setLabel("0%");
+        axisValuesY.add(av0);
+        AxisValue av1 = new AxisValue(25f);
+        av1.setLabel("25%");
+        axisValuesY.add(av1);
+        AxisValue av2 = new AxisValue(50f);
+        av2.setLabel("50%");
+        axisValuesY.add(av2);
+        AxisValue av3 = new AxisValue(75f);
+        av3.setLabel("75%");
+        axisValuesY.add(av3);
+        AxisValue av4 = new AxisValue(100f);
+        av4.setLabel("100%");
+        axisValuesY.add(av4);
+        axisY.setValues(axisValuesY);
+        data.setAxisYLeft(axisY);
 
         previewData = new ColumnChartData(data);
         for (Column column : previewData.getColumns()) {

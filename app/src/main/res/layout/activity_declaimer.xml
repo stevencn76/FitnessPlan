@@ -66,7 +66,9 @@
         android:layout_marginLeft="25dp"
         android:layout_marginStart="25dp"
         android:id="@+id/disagreeBtn"
-        android:onClick="onDisagreeBtnClicked" />
+        android:onClick="onDisagreeBtnClicked"
+        android:background="@color/buttonbg"
+        android:textColor="@color/buttontextcolor" />
 
     <Button
         android:text="Confirm"
@@ -79,7 +81,9 @@
         android:layout_marginTop="11dp"
         android:id="@+id/confirmBtn"
         android:enabled="false"
-        android:onClick="onConfirmBtnClicked" />
+        android:onClick="onConfirmBtnClicked"
+        android:background="@color/buttonbg"
+        android:textColor="@color/buttontextcolor" />
 
     <CheckBox
         android:text="Agree"

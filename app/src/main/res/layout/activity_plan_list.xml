@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="truestrength.fitnessplan.activity.PlanListActivity">
+    tools:context="truestrength.fitnessplan.activity.PlanListActivity"
+    android:background="@color/mainbg">
 
     <ListView
         android:layout_width="match_parent"
@@ -23,5 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/createPlanBtn"
-        android:onClick="onCreatePlanBtnClicked" />
+        android:onClick="onCreatePlanBtnClicked"
+        android:background="@color/buttonbg"
+        android:textColor="@color/buttontextcolor" />
 </LinearLayout>

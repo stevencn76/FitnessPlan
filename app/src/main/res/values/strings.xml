@@ -8,6 +8,7 @@
     <string name="contact_name">Contact: Mike</string>
     <string name="contact_email">Email: michael.truestrength@outlook.com</string>
     <string name="contact_facebook">Facebook: https://www.facebook.com/TrueStrengthNZ/</string>
+    <string name="facebook_url">https://www.facebook.com/TrueStrengthNZ/</string>
     <string name="title_plan_list">Plan List</string>
     <string name="title_plan_detail">Plan Details</string>
     <string name="title_create_plan">Create New Plan</string>

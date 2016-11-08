@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="truestrength.fitnessplan.activity.ExerciseActivity">
+    tools:context="truestrength.fitnessplan.activity.ExerciseActivity"
+    android:background="@color/mainbg">
 
     <TextView
         android:text="Warm Up"

@@ -4,6 +4,7 @@ package truestrength.fitnessplan.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -52,6 +53,20 @@ public class DateUtil {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         return format.format(date);
+    }
+
+    public static String getDay(String sqlDate) {
+        Date td = fromSqlDateString(sqlDate);
+        SimpleDateFormat format = new SimpleDateFormat("dd");
+
+        return format.format(td);
+    }
+
+    public static String getDayMonth(String sqlDate) {
+        Date td = fromSqlDateString(sqlDate);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM");
+
+        return format.format(td);
     }
 
     public static String toDateAndWeekdayString(Date date) {

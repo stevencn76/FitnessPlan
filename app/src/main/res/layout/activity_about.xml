@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="truestrength.fitnessplan.activity.AboutActivity">
+    tools:context="truestrength.fitnessplan.activity.AboutActivity"
+    android:background="@color/mainbg">
 
     <ImageView
         android:layout_width="match_parent"
@@ -53,10 +54,19 @@
         android:textStyle="normal|bold" />
 
     <TextView
-        android:text="@string/contact_facebook"
+        android:text="Facebook:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView8"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="normal|bold" />
+
+    <TextView
+        android:text="@string/facebook_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/facebookTextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="normal|bold"
+        android:textColor="@color/linkcolor" />
 </LinearLayout>

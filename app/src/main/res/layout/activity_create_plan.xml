@@ -43,7 +43,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/cancelBtn"
                     android:layout_weight="1"
-                    android:onClick="onCancelBtnClicked" />
+                    android:onClick="onCancelBtnClicked"
+                    android:background="@color/buttonbg"
+                    android:layout_margin="2dip"
+                    android:textColor="@color/buttontextcolor" />
 
                 <Button
                     android:text="Confirm"
@@ -51,7 +54,10 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/okBtn"
                     android:layout_weight="1"
-                    android:onClick="onOkBtnClicked" />
+                    android:onClick="onOkBtnClicked"
+                    android:background="@color/buttonbg"
+                    android:layout_margin="2dip"
+                    android:textColor="@color/buttontextcolor" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
